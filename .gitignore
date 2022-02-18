@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# PDFs
+INFO7-cours1.pdf
+INFO7-cours2.pdf
+INFO7-exemple-jeu.pdf
+INFO7-projet-editeur.pdf
