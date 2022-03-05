@@ -1,8 +1,28 @@
 <div *ngIf="hero">
   <h2>{{ hero.name | uppercase }} Details</h2>
   <div><span>id: </span>{{ hero.id }}</div>
-  <div>
-    <label for="hero-name">Hero name: </label>
-    <input id="hero-name" [(ngModel)]="hero.name" placeholder="name" />
-  </div>
+
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="hero-name">Hero name: </label>
+      <input id="hero-name" formControlName="name" placeholder="name" />
+    </div>
+    <!-- Attack input -->
+    <div>
+      <label for="hero-attack">Attack: </label>
+      <input id="hero-attack" formControlName="attack" placeholder="attack" />
+    </div>
+    <!-- Dodge input -->
+    <div>
+      <label for="hero-dodge">Dodge: </label>
+      <input id="hero-dodge" formControlName="dodge" placeholder="dodge" />
+    </div>
+    <!-- lp input -->
+    <div>
+      <label for="hero-lp">Life Points: </label>
+      <input id="hero-lp" formControlName="lp" placeholder="lp" />
+    </div>
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+  </form>
 </div>
