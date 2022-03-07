@@ -46,3 +46,7 @@ INFO7-cours1.pdf
 INFO7-cours2.pdf
 INFO7-exemple-jeu.pdf
 INFO7-projet-editeur.pdf
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
