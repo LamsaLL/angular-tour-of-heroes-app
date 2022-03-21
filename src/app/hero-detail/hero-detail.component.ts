@@ -34,6 +34,14 @@ export class HeroDetailComponent implements OnInit {
     { validators: maxStatHero }
   );
 
+  // get points left to distribute  to  the  hero
+  get pointsLeft(): number {
+    const attack = this.heroForm.get('attack')?.value;
+    const dodge = this.heroForm.get('dodge')?.value;
+    const lp = this.heroForm.get('lp')?.value;
+    return 40 - attack - dodge - lp;
+  }
+
   populateForm = (hero: Hero | undefined): void => {
     this.heroForm.setValue({
       name: this.hero?.name,
@@ -48,9 +56,6 @@ export class HeroDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.heroForm.value);
-
     this.heroService.updateHero({ id: this.hero?.id, ...this.heroForm.value });
   }
 

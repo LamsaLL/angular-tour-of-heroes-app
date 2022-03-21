@@ -43,10 +43,14 @@
     <!-- Submit -->
     <button type="submit">Submit</button>
   </form>
+  <div>{{ heroForm.value?.['maxStatHero'] }}</div>
   <div
     *ngIf="heroForm.errors?.['maxStatHero']"
     class="cross-validation-error-message alert alert-danger"
   >
     Max 40 points
+  </div>
+  <div [hidden]="heroForm.errors?.['maxStatHero']">
+    Points restants: {{ pointsLeft }}
   </div>
 </div>
