@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { HeroService } from '../service/hero.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { maxStatHero } from '../shared/max-stat-hero.directive';
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -23,26 +24,34 @@ export class HeroDetailComponent implements OnInit {
   // − La somme de l’attaque, esquive, dégât et pv doit être inférieur ou égale à 40 ;
   // − Aucune caractéristique en dessous de 1pt ;
   // − Afficher les points restant à répartir pour aider l’utilisateur.
-  heroForm = new FormGroup({
-    name: new FormControl(''),
-    attack: new FormControl(''),
-    dodge: new FormControl(''),
-    lp: new FormControl(''),
-  });
+  heroForm = new FormGroup(
+    {
+      name: new FormControl('', Validators.required),
+      attack: new FormControl('', [Validators.required, Validators.min(1)]),
+      dodge: new FormControl('', [Validators.required, Validators.min(1)]),
+      lp: new FormControl('', [Validators.required, Validators.min(1)]),
+    },
+    { validators: maxStatHero }
+  );
 
-  ngOnInit(): void {
-    this.getHero();
+  populateForm = (hero: Hero | undefined): void => {
     this.heroForm.setValue({
       name: this.hero?.name,
       attack: this.hero?.attack,
       dodge: this.hero?.dodge,
       lp: this.hero?.lp,
     });
+  };
+
+  ngOnInit(): void {
+    this.getHero();
   }
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.heroForm.value);
+
+    this.heroService.updateHero({ id: this.hero?.id, ...this.heroForm.value });
   }
 
   goBack(): void {
@@ -50,7 +59,10 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.heroService.getHero(id).subscribe((hero) => (this.hero = hero));
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.heroService.getHero(id).subscribe((hero) => {
+      this.hero = hero;
+      this.populateForm(this.hero);
+    });
   }
 }

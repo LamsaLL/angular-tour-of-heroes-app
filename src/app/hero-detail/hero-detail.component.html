@@ -10,19 +10,43 @@
     <!-- Attack input -->
     <div>
       <label for="hero-attack">Attack: </label>
-      <input id="hero-attack" formControlName="attack" placeholder="attack" />
+      <input
+        id="hero-attack"
+        type="number"
+        min="1"
+        formControlName="attack"
+        placeholder="attack"
+      />
     </div>
     <!-- Dodge input -->
     <div>
       <label for="hero-dodge">Dodge: </label>
-      <input id="hero-dodge" formControlName="dodge" placeholder="dodge" />
+      <input
+        id="hero-dodge"
+        type="number"
+        min="1"
+        formControlName="dodge"
+        placeholder="dodge"
+      />
     </div>
     <!-- lp input -->
     <div>
       <label for="hero-lp">Life Points: </label>
-      <input id="hero-lp" formControlName="lp" placeholder="lp" />
+      <input
+        id="hero-lp"
+        type="number"
+        min="1"
+        formControlName="lp"
+        placeholder="lp"
+      />
     </div>
     <!-- Submit -->
     <button type="submit">Submit</button>
   </form>
+  <div
+    *ngIf="heroForm.errors?.['maxStatHero']"
+    class="cross-validation-error-message alert alert-danger"
+  >
+    Max 40 points
+  </div>
 </div>
