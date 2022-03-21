@@ -1,6 +1,6 @@
 import { Serializable } from './serializable';
 
-export class Hero extends Serializable {
+export class Weapon extends Serializable {
   id?: string;
   name?: string;
   attack?: number;

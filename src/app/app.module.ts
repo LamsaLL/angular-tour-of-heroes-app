@@ -13,6 +13,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MessagesComponent } from './messages/messages.component';
+import { WeaponsComponent } from './weapons/weapons.component';
+import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,8 @@ import { MessagesComponent } from './messages/messages.component';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
+    WeaponsComponent,
+    WeaponDetailComponent,
   ],
   imports: [
     BrowserModule,

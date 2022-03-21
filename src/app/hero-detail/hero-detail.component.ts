@@ -56,7 +56,12 @@ export class HeroDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.heroService.updateHero({ id: this.hero?.id, ...this.heroForm.value });
+    if (this.heroForm.valid) {
+      this.heroService.updateHero({
+        id: this.hero?.id,
+        ...this.heroForm.value,
+      });
+    }
   }
 
   goBack(): void {
