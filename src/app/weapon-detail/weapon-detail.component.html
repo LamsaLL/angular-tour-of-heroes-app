@@ -1,1 +1,59 @@
-<p>weapon-detail works!</p>
+<div *ngIf="weapon">
+  <h2>{{ weapon.name | uppercase }} Details</h2>
+  <div><span>id: </span>{{ weapon.id }}</div>
+
+  <form [formGroup]="weaponForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="weapon-name">Hero name: </label>
+      <input id="weapon-name" formControlName="name" placeholder="name" />
+    </div>
+    <!-- Attack input -->
+    <div>
+      <label for="weapon-attack">Attack: </label>
+      <input
+        id="weapon-attack"
+        type="number"
+        min="-5"
+        max="5"
+        formControlName="attack"
+        placeholder="attack"
+      />
+    </div>
+    <!-- Dodge input -->
+    <div>
+      <label for="weapon-dodge">Dodge: </label>
+      <input
+        id="weapon-dodge"
+        type="number"
+        min="-5"
+        max="5"
+        formControlName="dodge"
+        placeholder="dodge"
+      />
+    </div>
+    <!-- lp input -->
+    <div>
+      <label for="weapon-lp">Life Points: </label>
+      <input
+        id="weapon-lp"
+        type="number"
+        min="-5"
+        max="5"
+        formControlName="lp"
+        placeholder="lp"
+      />
+    </div>
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+  </form>
+  <div>{{ weaponForm.value?.['statWeapon'] }}</div>
+  <div
+    *ngIf="weaponForm.errors?.['statWeapon']"
+    class="cross-validation-error-message alert alert-danger"
+  >
+    La somme des points doit être egale à 0
+  </div>
+  <div [hidden]="!weaponForm.errors?.['statWeapon']">
+    Points restants: {{ pointsLeft }}
+  </div>
+</div>
