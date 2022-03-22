@@ -13,12 +13,12 @@ export class WeaponsComponent implements OnInit {
   constructor(private weaponService: WeaponService) {}
 
   ngOnInit(): void {
-    this.getWeapones();
+    this.getWeapons();
   }
 
-  getWeapones(): void {
+  getWeapons(): void {
     this.weaponService
-      .getWeapones()
+      .getWeapons()
       .subscribe((weapons) => (this.weapons = weapons));
   }
 }

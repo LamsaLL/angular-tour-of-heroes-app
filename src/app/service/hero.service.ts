@@ -13,6 +13,7 @@ import {
   DocumentChangeAction,
   DocumentSnapshot,
 } from '@angular/fire/compat/firestore';
+import { WeaponService } from './weapon.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class HeroService {
 
   constructor(
     private messageService: MessageService,
+    private weaponService: WeaponService,
     private db: AngularFirestore
   ) {}
 

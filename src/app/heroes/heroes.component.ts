@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs';
 
 import { Hero } from '../data/hero';
 import { HeroService } from '../service/hero.service';
@@ -19,6 +20,9 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
+    this.heroService
+      .getHeroes()
+      .pipe(first())
+      .subscribe((heroes) => (this.heroes = heroes));
   }
 }

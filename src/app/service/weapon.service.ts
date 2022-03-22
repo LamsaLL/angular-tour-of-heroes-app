@@ -29,7 +29,7 @@ export class WeaponService {
   /**
    * Récupération de la liste des armes
    */
-  getWeapones(): Observable<Weapon[]> {
+  getWeapons(): Observable<Weapon[]> {
     //
     this.messageService.add('WeaponService: fetched weapones');
 
@@ -49,7 +49,7 @@ export class WeaponService {
   /**
    * Récupération des 3 premieres armes
    */
-  getWeaponesTop3(): Observable<Weapon[]> {
+  getWeaponsTop3(): Observable<Weapon[]> {
     //
     this.messageService.add('WeaponService: fetched weapones');
 

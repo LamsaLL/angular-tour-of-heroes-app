@@ -9,5 +9,5 @@ export const maxStatHero: ValidatorFn = (
   const lp = control.get('lp');
 
   const summ = attack?.value + dodge?.value + lp?.value;
-  return summ >= 40 ? { maxStatHero: true } : null;
+  return summ > 40 ? { maxStatHero: true } : null;
 };
