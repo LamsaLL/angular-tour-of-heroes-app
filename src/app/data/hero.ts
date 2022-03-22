@@ -1,4 +1,5 @@
 import { Serializable } from './serializable';
+import { Weapon } from './weapon';
 
 export class Hero extends Serializable {
   id?: string;
@@ -6,6 +7,7 @@ export class Hero extends Serializable {
   attack?: number;
   dodge?: number;
   lp?: number;
+  weaponId?: Weapon;
 
   constructor() {
     super();

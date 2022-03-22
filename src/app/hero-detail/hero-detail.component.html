@@ -40,6 +40,15 @@
         placeholder="lp"
       />
     </div>
+    <!-- Weapon select -->
+    <div>
+      <label for="hero-weapon">Weapon: </label>
+      <select id="hero-weapon" formControlName="weaponName">
+        <option *ngFor="let weapon of weapons" [value]="weapon.id">
+          {{ weapon.name }}
+        </option>
+      </select>
+    </div>
     <!-- Submit -->
     <button type="submit">Submit</button>
   </form>
@@ -53,4 +62,5 @@
   <div [hidden]="heroForm.errors?.['maxStatHero']">
     Points restants: {{ pointsLeft }}
   </div>
+  <div>ARME stat: {{ weapon?.attack }}</div>
 </div>

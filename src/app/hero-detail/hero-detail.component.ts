@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { HeroService } from '../service/hero.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { maxStatHero } from '../shared/max-stat-hero.directive';
+import { Weapon } from '../data/weapon';
+import { WeaponService } from '../service/weapon.service';
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -13,26 +15,44 @@ import { maxStatHero } from '../shared/max-stat-hero.directive';
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero?: Hero;
+  weapon?: Weapon;
+  @Input() weapons?: Weapon[];
 
+  heroForm!: FormGroup;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
+    private weaponService: WeaponService,
     private location: Location
-  ) {}
-  // Une  base  de  40
-  // points  est  à  répartir
-  // − La somme de l’attaque, esquive, dégât et pv doit être inférieur ou égale à 40 ;
-  // − Aucune caractéristique en dessous de 1pt ;
-  // − Afficher les points restant à répartir pour aider l’utilisateur.
-  heroForm = new FormGroup(
-    {
-      name: new FormControl('', Validators.required),
-      attack: new FormControl('', [Validators.required, Validators.min(1)]),
-      dodge: new FormControl('', [Validators.required, Validators.min(1)]),
-      lp: new FormControl('', [Validators.required, Validators.min(1)]),
-    },
-    { validators: maxStatHero }
-  );
+  ) {
+    this.createForm();
+  }
+
+  createForm() {
+    console.log(this.hero?.weaponId);
+    this.heroForm = new FormGroup(
+      {
+        name: new FormControl(this.hero?.name, Validators.required),
+        attack: new FormControl(this.hero?.attack, [
+          Validators.required,
+          Validators.min(1),
+        ]),
+        dodge: new FormControl(this.hero?.dodge, [
+          Validators.required,
+          Validators.min(1),
+        ]),
+        lp: new FormControl(this.hero?.lp, [
+          Validators.required,
+          Validators.min(1),
+        ]),
+        weaponName: new FormControl(
+          this.hero?.weaponId?.id ?? '',
+          Validators.required
+        ),
+      },
+      { validators: maxStatHero }
+    );
+  }
 
   // get points left to distribute  to  the  hero
   get pointsLeft(): number {
@@ -42,17 +62,9 @@ export class HeroDetailComponent implements OnInit {
     return 40 - attack - dodge - lp;
   }
 
-  populateForm = (hero: Hero | undefined): void => {
-    this.heroForm.setValue({
-      name: this.hero?.name,
-      attack: this.hero?.attack,
-      dodge: this.hero?.dodge,
-      lp: this.hero?.lp,
-    });
-  };
-
   ngOnInit(): void {
     this.getHero();
+    this.getWeapons();
   }
 
   onSubmit() {
@@ -72,7 +84,22 @@ export class HeroDetailComponent implements OnInit {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.heroService.getHero(id).subscribe((hero) => {
       this.hero = hero;
-      this.populateForm(this.hero);
+      this.createForm();
+
+      if (this.hero?.weaponId?.id !== undefined) {
+        this.weaponService
+          .getWeapon(this.hero?.weaponId.id)
+          .subscribe((weapon) => {
+            this.weapon = weapon;
+          });
+      }
+    });
+  }
+
+  getWeapons(): void {
+    this.weaponService.getWeapons().subscribe((weapons) => {
+      this.weapons = weapons;
+      console.log(weapons);
     });
   }
 }
