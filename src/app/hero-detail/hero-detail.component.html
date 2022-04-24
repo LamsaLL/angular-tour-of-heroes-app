@@ -43,7 +43,7 @@
     <!-- Weapon select -->
     <div>
       <label for="hero-weapon">Weapon: </label>
-      <select id="hero-weapon" formControlName="weaponName">
+      <select id="hero-weapon" formControlName="weaponId">
         <option *ngFor="let weapon of weapons" [value]="weapon.id">
           {{ weapon.name }}
         </option>

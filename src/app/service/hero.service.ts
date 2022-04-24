@@ -112,7 +112,7 @@ export class HeroService {
    */
   updateHero(hero: Hero) {
     // Update document
-    console.log(Object.assign({}, hero));
+    console.log(hero);
     if (hero.id != undefined) {
       this.getHeroDocument(hero.id).update(Object.assign({}, hero) as {});
     }

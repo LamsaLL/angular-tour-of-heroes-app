@@ -31,7 +31,7 @@ export class WeaponService {
    */
   getWeapons(): Observable<Weapon[]> {
     //
-    this.messageService.add('WeaponService: fetched weapones');
+    this.messageService.add('WeaponService: fetched weapons');
 
     //
     return this.db
@@ -51,7 +51,7 @@ export class WeaponService {
    */
   getWeaponsTop3(): Observable<Weapon[]> {
     //
-    this.messageService.add('WeaponService: fetched weapones');
+    this.messageService.add('WeaponService: fetched weapons');
 
     //
     return this.db

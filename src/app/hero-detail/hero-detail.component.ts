@@ -24,31 +24,16 @@ export class HeroDetailComponent implements OnInit {
     private heroService: HeroService,
     private weaponService: WeaponService,
     private location: Location
-  ) {
-    this.createForm();
-  }
+  ) {}
 
   createForm() {
-    console.log(this.hero?.weaponId);
     this.heroForm = new FormGroup(
       {
-        name: new FormControl(this.hero?.name, Validators.required),
-        attack: new FormControl(this.hero?.attack, [
-          Validators.required,
-          Validators.min(1),
-        ]),
-        dodge: new FormControl(this.hero?.dodge, [
-          Validators.required,
-          Validators.min(1),
-        ]),
-        lp: new FormControl(this.hero?.lp, [
-          Validators.required,
-          Validators.min(1),
-        ]),
-        weaponName: new FormControl(
-          this.hero?.weaponId?.id ?? '',
-          Validators.required
-        ),
+        name: new FormControl('', Validators.required),
+        attack: new FormControl('', [Validators.required, Validators.min(1)]),
+        dodge: new FormControl('', [Validators.required, Validators.min(1)]),
+        lp: new FormControl('', [Validators.required, Validators.min(1)]),
+        weaponId: new FormControl('', Validators.required),
       },
       { validators: maxStatHero }
     );
@@ -63,6 +48,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm();
     this.getHero();
     this.getWeapons();
   }
@@ -84,13 +70,20 @@ export class HeroDetailComponent implements OnInit {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.heroService.getHero(id).subscribe((hero) => {
       this.hero = hero;
-      this.createForm();
 
-      if (this.hero?.weaponId?.id !== undefined) {
+      this.heroForm.patchValue({
+        name: this.hero?.name,
+        attack: this.hero?.attack,
+        dodge: this.hero?.dodge,
+        lp: this.hero?.lp,
+      });
+
+      if (this.hero?.weaponId !== undefined) {
         this.weaponService
-          .getWeapon(this.hero?.weaponId.id)
+          .getWeapon(this.hero?.weaponId)
           .subscribe((weapon) => {
             this.weapon = weapon;
+            this.heroForm.patchValue({ weaponId: this.weapon?.id });
           });
       }
     });
@@ -99,7 +92,6 @@ export class HeroDetailComponent implements OnInit {
   getWeapons(): void {
     this.weaponService.getWeapons().subscribe((weapons) => {
       this.weapons = weapons;
-      console.log(weapons);
     });
   }
 }
