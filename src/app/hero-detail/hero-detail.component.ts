@@ -8,6 +8,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { maxStatHero } from '../shared/max-stat-hero.directive';
 import { Weapon } from '../data/weapon';
 import { WeaponService } from '../service/weapon.service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -23,7 +25,8 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private heroService: HeroService,
     private weaponService: WeaponService,
-    private location: Location
+    private location: Location,
+    private toastr: ToastrService
   ) {}
 
   createForm() {
@@ -59,6 +62,9 @@ export class HeroDetailComponent implements OnInit {
         id: this.hero?.id,
         ...this.heroForm.value,
       });
+      this.toastr.success('Hero updated', 'Success');
+    } else {
+      this.toastr.error('Form is not valid', 'Error');
     }
   }
 
