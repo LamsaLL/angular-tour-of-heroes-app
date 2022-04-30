@@ -1,6 +1,7 @@
 <h2>My Heroes</h2>
+<hero-search #heroSearch></hero-search>
 <ul class="heroes">
-  <li *ngFor="let hero of heroes">
+  <li *ngFor="let hero of heroes | filterHeros: heroSearch.currSearch">
     <a routerLink="/hero-detail/{{ hero.id }}">
       <span class="badge">{{ hero.id }}</span> {{ hero.name }}
     </a>

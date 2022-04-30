@@ -17,6 +17,9 @@ import { WeaponsComponent } from './weapons/weapons.component';
 import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { HttpModule } from '@angular/http';
+import { FilterHeroPipe } from './heroes/heroes.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DashboardComponent,
     WeaponsComponent,
     WeaponDetailComponent,
+    HeroSearchComponent,
+    HeroSearchComponent,
+    FilterHeroPipe,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +45,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
+    HttpModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
