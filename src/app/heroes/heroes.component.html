@@ -1,10 +1,26 @@
 <h2>My Heroes</h2>
-<a routerLink="/hero-detail/new">Nouvel héro</a>
-<hero-search #heroSearch></hero-search>
-<ul class="heroes">
-  <li *ngFor="let hero of heroes | filterHeros: heroSearch.currSearch">
-    <a routerLink="/hero-detail/{{ hero.id }}">
-      <span class="badge">{{ hero.id }}</span> {{ hero.name }}
-    </a>
-  </li>
-</ul>
+<div class="container-fluid">
+  <a routerLink="/hero-detail/new" class="btn btn-success"
+    ><i class="bi bi-plus-lg"></i> New hero</a
+  >
+  <hero-search #heroSearch></hero-search>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div
+      *ngFor="let hero of heroes | filterHeros: heroSearch.currSearch"
+      class="col"
+    >
+      <div class="card">
+        <img src="" class="card-img-top" alt="" />
+        <div class="card-body">
+          <h5 class="card-title">{{ hero.name }}</h5>
+          <a routerLink="/hero-detail/{{ hero.id }}" class="btn btn-primary"
+            ><i class="bi bi-pencil-fill"></i> edit</a
+          >
+          <button class="btn btn-danger" (click)="delete(hero)">
+            <i class="bi bi-trash-fill"></i> delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

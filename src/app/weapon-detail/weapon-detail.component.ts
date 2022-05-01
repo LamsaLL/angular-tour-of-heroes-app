@@ -81,7 +81,7 @@ export class WeaponDetailComponent implements OnInit {
         console.log('Weapon created', this.weaponForm.value);
       }
     } else {
-      this.toastr.success('Form is not valid', 'Error');
+      this.toastr.error('Form is not valid', 'Error');
     }
   }
 

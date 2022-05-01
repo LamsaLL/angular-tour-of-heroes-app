@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { Weapon } from '../data/weapon';
 import { WeaponService } from '../service/weapon.service';
+import { ToastrService } from 'ngx-toastr';
 @Pipe({
   name: 'filterWeapons',
 })
@@ -25,10 +26,24 @@ export class FilterWeaponPipe {
 export class WeaponsComponent implements OnInit {
   weapons: Weapon[] = [];
 
-  constructor(private weaponService: WeaponService) {}
+  constructor(
+    private weaponService: WeaponService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getWeapons();
+  }
+
+  delete(weapon: Weapon): void {
+    try {
+      this.weapons = this.weapons.filter((w) => w !== weapon);
+      this.weaponService.deleteWeapon(weapon);
+      this.toastr.success('Weapon deleted successfully.');
+    } catch (e) {
+      console.log(e);
+      this.toastr.error('Error deleting weapon.');
+    }
   }
 
   getWeapons(): void {

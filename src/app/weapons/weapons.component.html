@@ -1,10 +1,26 @@
 <h2>My Weapons</h2>
-<a routerLink="/weapon-detail/new">Nouvelle arme</a>
-<weapon-search #weaponSearch></weapon-search>
-<ul class="weapons">
-  <li *ngFor="let weapon of weapons | filterWeapons: weaponSearch.currSearch">
-    <a routerLink="/weapon-detail/{{ weapon.id }}">
-      <span class="badge">{{ weapon.id }}</span> {{ weapon.name }}
-    </a>
-  </li>
-</ul>
+<div class="container-fluid">
+  <a routerLink="/weapon-detail/new" class="btn btn-success">
+    <i class="bi bi-plus-lg"></i>New weapon</a
+  >
+  <weapon-search #weaponSearch></weapon-search>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div
+      *ngFor="let weapon of weapons | filterWeapons: weaponSearch.currSearch"
+      class="col"
+    >
+      <div class="card">
+        <img src="" class="card-img-top" alt="" />
+        <div class="card-body">
+          <h5 class="card-title">{{ weapon.name }}</h5>
+          <a routerLink="/weapon-detail/{{ weapon.id }}" class="btn btn-primary"
+            ><i class="bi bi-pencil-fill"></i> edit</a
+          >
+          <button class="btn btn-danger" (click)="delete(weapon)">
+            <i class="bi bi-trash-fill"></i> delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

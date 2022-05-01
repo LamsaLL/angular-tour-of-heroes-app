@@ -4,6 +4,7 @@ import { first } from 'rxjs';
 import { Hero } from '../data/hero';
 import { HeroService } from '../service/hero.service';
 import { MessageService } from '../service/message.service';
+import { ToastrService } from '../../../node_modules/ngx-toastr';
 @Pipe({
   name: 'filterHeros',
 })
@@ -28,10 +29,24 @@ export class FilterHeroPipe {
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
 
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getHeroes();
+  }
+
+  delete(hero: Hero): void {
+    try {
+      this.heroes = this.heroes.filter((h) => h !== hero);
+      this.heroService.deleteHero(hero);
+      this.toastr.success('Hero deleted successfully.');
+    } catch (e) {
+      console.log(e);
+      this.toastr.error('Error deleting hero.');
+    }
   }
 
   getHeroes(): void {
