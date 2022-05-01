@@ -20,4 +20,4 @@ jobs:
       - run: npm i
       - run: ng config -g cli.warnings.versionMismatch false
       - run: ng build --prod --base-href /~amsallel/info7/
-      - run: sshpass -p '$SSH_PASSWORD' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r `pwd`/dist/my-app/* amsallel@transit.iut2.univ-grenoble-alpes.fr:public_html/info7/
+      - run: sshpass -p $SSH_PASSWORD scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r `pwd`/dist/my-app/* amsallel@transit.iut2.univ-grenoble-alpes.fr:public_html/info7/
