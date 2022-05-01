@@ -1,6 +1,6 @@
-<div *ngIf="hero">
-  <h2>{{ hero.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{ hero.id }}</div>
+<div>
+  <h2 *ngIf="hero">{{ hero.name | uppercase }} Details</h2>
+  <div *ngIf="hero"><span>id: </span>{{ hero.id }}</div>
 
   <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
     <div>

@@ -1,4 +1,5 @@
 <h2>My Heroes</h2>
+<a routerLink="/hero-detail/new">Nouvel héro</a>
 <hero-search #heroSearch></hero-search>
 <ul class="heroes">
   <li *ngFor="let hero of heroes | filterHeros: heroSearch.currSearch">

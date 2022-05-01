@@ -4,7 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { HeroService } from '../service/hero.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { maxStatHero } from '../shared/max-stat-hero.directive';
 import { Weapon } from '../data/weapon';
 import { WeaponService } from '../service/weapon.service';
@@ -17,26 +22,31 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero?: Hero;
+  id?: number;
   weapon?: Weapon;
   @Input() weapons?: Weapon[];
-
   heroForm!: FormGroup;
+
+  private sub: any;
+
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
     private weaponService: WeaponService,
     private location: Location,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   createForm() {
-    this.heroForm = new FormGroup(
+    console.log();
+    this.heroForm = this.fb.group(
       {
-        name: new FormControl('', Validators.required),
-        attack: new FormControl('', [Validators.required, Validators.min(1)]),
-        dodge: new FormControl('', [Validators.required, Validators.min(1)]),
-        lp: new FormControl('', [Validators.required, Validators.min(1)]),
-        weaponId: new FormControl('', Validators.required),
+        name: ['', Validators.required],
+        attack: ['', [Validators.required, Validators.min(1)]],
+        dodge: ['', [Validators.required, Validators.min(1)]],
+        lp: ['', [Validators.required, Validators.min(1)]],
+        weaponId: [],
       },
       { validators: maxStatHero }
     );
@@ -51,18 +61,33 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm();
-    this.getHero();
-    this.getWeapons();
+    this.sub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      this.createForm();
+      // if id is not defined, it is a new hero
+      if (this.id) {
+        this.getHero();
+        this.getWeapons();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onSubmit() {
     if (this.heroForm.valid) {
-      this.heroService.updateHero({
-        id: this.hero?.id,
-        ...this.heroForm.value,
-      });
-      this.toastr.success('Hero updated', 'Success');
+      if (this.id) {
+        this.heroService.updateHero({
+          id: this.hero?.id,
+          ...this.heroForm.value,
+        });
+        this.toastr.success('Hero updated', 'Success');
+      } else {
+        this.heroService.addHero(this.heroForm.value);
+        this.toastr.success('Hero added', 'Success');
+      }
     } else {
       this.toastr.error('Form is not valid', 'Error');
     }

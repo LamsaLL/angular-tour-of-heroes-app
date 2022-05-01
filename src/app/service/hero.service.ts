@@ -101,7 +101,7 @@ export class HeroService {
    * @param hero
    */
   addHero(hero: Hero) {
-    this.db.collection(HeroService.url).add(hero.toJSON());
+    this.db.collection(HeroService.url).add(Object.assign({}, hero) as {});
     //this.db.collection(HeroService.url).add(JSON.stringify(hero));
     //this.db.collection<JSON>(HeroService.url).add(Object.assign({}, hero));
   }
