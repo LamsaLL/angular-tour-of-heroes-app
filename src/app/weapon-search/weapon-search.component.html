@@ -1,0 +1,13 @@
+<div id="search-component">
+  <h4>Weapon Search</h4>
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+  <div>
+    <div
+      *ngFor="let weapon of weapons | async"
+      (click)="gotoDetail(weapon)"
+      class="search-result"
+    >
+      {{ weapon.name }}
+    </div>
+  </div>
+</div>

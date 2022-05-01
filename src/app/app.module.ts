@@ -13,13 +13,17 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MessagesComponent } from './messages/messages.component';
-import { WeaponsComponent } from './weapons/weapons.component';
+import {
+  FilterWeaponPipe,
+  WeaponsComponent,
+} from './weapons/weapons.component';
 import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HttpModule } from '@angular/http';
 import { FilterHeroPipe } from './heroes/heroes.component';
+import { WeaponSearchComponent } from './weapon-search/weapon-search.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +35,9 @@ import { FilterHeroPipe } from './heroes/heroes.component';
     WeaponsComponent,
     WeaponDetailComponent,
     HeroSearchComponent,
-    HeroSearchComponent,
     FilterHeroPipe,
+    WeaponSearchComponent,
+    FilterWeaponPipe,
   ],
   imports: [
     BrowserModule,

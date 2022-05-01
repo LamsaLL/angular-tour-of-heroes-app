@@ -1,6 +1,7 @@
 <h2>My Weapons</h2>
+<weapon-search #weaponSearch></weapon-search>
 <ul class="weapons">
-  <li *ngFor="let weapon of weapons">
+  <li *ngFor="let weapon of weapons | filterWeapons: weaponSearch.currSearch">
     <a routerLink="/weapon-detail/{{ weapon.id }}">
       <span class="badge">{{ weapon.id }}</span> {{ weapon.name }}
     </a>
