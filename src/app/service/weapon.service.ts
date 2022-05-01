@@ -99,7 +99,7 @@ export class WeaponService {
    * @param weapon
    */
   addWeapon(weapon: Weapon) {
-    this.db.collection(WeaponService.url).add(weapon.toJSON());
+    this.db.collection(WeaponService.url).add(Object.assign({}, weapon) as {});
     //this.db.collection(WeaponService.url).add(JSON.stringify(weapon));
     //this.db.collection<JSON>(WeaponService.url).add(Object.assign({}, weapon));
   }

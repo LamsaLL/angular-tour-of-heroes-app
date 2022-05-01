@@ -1,10 +1,10 @@
-<div *ngIf="weapon">
-  <h2>{{ weapon.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{ weapon.id }}</div>
+<div>
+  <h2 *ngIf="weapon">{{ weapon.name | uppercase }} Details</h2>
+  <div *ngIf="weapon"><span>id: </span>{{ weapon.id }}</div>
 
   <form [formGroup]="weaponForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="weapon-name">Hero name: </label>
+      <label for="weapon-name">name: </label>
       <input id="weapon-name" formControlName="name" placeholder="name" />
     </div>
     <!-- Attack input -->

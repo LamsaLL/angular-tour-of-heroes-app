@@ -39,7 +39,6 @@ export class HeroDetailComponent implements OnInit {
   ) {}
 
   createForm() {
-    console.log();
     this.heroForm = this.fb.group(
       {
         name: ['', Validators.required],
@@ -86,7 +85,7 @@ export class HeroDetailComponent implements OnInit {
         this.toastr.success('Hero updated', 'Success');
       } else {
         this.heroService.addHero(this.heroForm.value);
-        this.toastr.success('Hero added', 'Success');
+        this.toastr.success('Hero created', 'Success');
       }
     } else {
       this.toastr.error('Form is not valid', 'Error');

@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Weapon } from '../data/weapon';
 import { WeaponService } from '../service/weapon.service';
 import { statWeapon } from '../shared/stat-weapon.directive';
 import { Location } from '@angular/common';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-weapon-detail',
   templateUrl: './weapon-detail.component.html',
@@ -13,34 +13,35 @@ import { Location } from '@angular/common';
 })
 export class WeaponDetailComponent implements OnInit {
   @Input() weapon?: Weapon;
+  id?: number;
+  weaponForm!: FormGroup;
+  private sub: any;
 
   constructor(
     private route: ActivatedRoute,
     private weaponService: WeaponService,
-    private location: Location
+    private location: Location,
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {}
 
-  weaponForm = new FormGroup(
-    {
-      name: new FormControl('', Validators.required),
-      attack: new FormControl('', [
-        Validators.required,
-        Validators.min(-5),
-        Validators.max(5),
-      ]),
-      dodge: new FormControl('', [
-        Validators.required,
-        Validators.min(-5),
-        Validators.max(5),
-      ]),
-      lp: new FormControl('', [
-        Validators.required,
-        Validators.min(-5),
-        Validators.max(5),
-      ]),
-    },
-    { validators: statWeapon }
-  );
+  createForm() {
+    this.weaponForm = this.fb.group(
+      {
+        name: ['', Validators.required],
+        attack: [
+          '',
+          [Validators.required, Validators.min(-5), Validators.max(5)],
+        ],
+        dodge: [
+          '',
+          [Validators.required, Validators.min(-5), Validators.max(5)],
+        ],
+        lp: ['', [Validators.required, Validators.min(-5), Validators.max(5)]],
+      },
+      { validators: statWeapon }
+    );
+  }
 
   // get points left to distribute  to  the  weapon
   get pointsLeft(): number {
@@ -51,25 +52,36 @@ export class WeaponDetailComponent implements OnInit {
     return 0 - summ;
   }
 
-  populateForm = (weapon: Weapon | undefined): void => {
-    this.weaponForm.setValue({
-      name: this.weapon?.name,
-      attack: this.weapon?.attack,
-      dodge: this.weapon?.dodge,
-      lp: this.weapon?.lp,
-    });
-  };
-
   ngOnInit(): void {
-    this.getWeapon();
+    this.sub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      this.createForm();
+      // if id is not defined, it is a new hero
+      if (this.id) {
+        this.getWeapon();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onSubmit() {
     if (this.weaponForm.valid) {
-      this.weaponService.updateWeapon({
-        id: this.weapon?.id,
-        ...this.weaponForm.value,
-      });
+      if (this.id) {
+        this.weaponService.updateWeapon({
+          id: this.weapon?.id,
+          ...this.weaponForm.value,
+        });
+        this.toastr.success('Weapon updated', 'Success');
+      } else {
+        this.weaponService.addWeapon(this.weaponForm.value);
+        this.toastr.success('Weapon created', 'Success');
+        console.log('Weapon created', this.weaponForm.value);
+      }
+    } else {
+      this.toastr.success('Form is not valid', 'Error');
     }
   }
 
@@ -81,7 +93,12 @@ export class WeaponDetailComponent implements OnInit {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.weaponService.getWeapon(id).subscribe((weapon) => {
       this.weapon = weapon;
-      this.populateForm(this.weapon);
+      this.weaponForm.patchValue({
+        name: this.weapon?.name,
+        attack: this.weapon?.attack,
+        dodge: this.weapon?.dodge,
+        lp: this.weapon?.lp,
+      });
     });
   }
 }

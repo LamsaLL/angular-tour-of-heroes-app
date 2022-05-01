@@ -1,4 +1,5 @@
 <h2>My Weapons</h2>
+<a routerLink="/weapon-detail/new">Nouvelle arme</a>
 <weapon-search #weaponSearch></weapon-search>
 <ul class="weapons">
   <li *ngFor="let weapon of weapons | filterWeapons: weaponSearch.currSearch">
