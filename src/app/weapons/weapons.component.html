@@ -13,12 +13,23 @@
         <img src="" class="card-img-top" alt="" />
         <div class="card-body">
           <h5 class="card-title">{{ weapon.name }}</h5>
-          <a routerLink="/weapon-detail/{{ weapon.id }}" class="btn btn-primary"
-            ><i class="bi bi-pencil-fill"></i> edit</a
-          >
-          <button class="btn btn-danger" (click)="delete(weapon)">
-            <i class="bi bi-trash-fill"></i> delete
-          </button>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Attack : {{ weapon.attack }}</li>
+            <li class="list-group-item">Dodge : {{ weapon.dodge }}</li>
+            <li class="list-group-item">lp: {{ weapon.lp }}</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-row-reverse">
+            <button class="btn btn-danger" (click)="delete(weapon)">
+              <i class="bi bi-trash-fill"></i> delete
+            </button>
+            <a
+              routerLink="/weapon-detail/{{ weapon.id }}"
+              class="btn btn-primary"
+              ><i class="bi bi-pencil-fill"></i> edit</a
+            >
+          </div>
         </div>
       </div>
     </div>
