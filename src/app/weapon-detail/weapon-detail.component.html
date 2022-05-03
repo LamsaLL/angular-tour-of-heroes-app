@@ -1,16 +1,21 @@
 <div>
-  <h2 *ngIf="weapon">{{ weapon.name | uppercase }} Details</h2>
-  <div *ngIf="weapon"><span>id: </span>{{ weapon.id }}</div>
+  <h2 class="mx-auto" *ngIf="weapon">{{ weapon.name | uppercase }}</h2>
 
-  <form [formGroup]="weaponForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="weapon-name">name: </label>
-      <input id="weapon-name" formControlName="name" placeholder="name" />
+  <form class="mx-auto" [formGroup]="weaponForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label" for="weapon-name">Name</label>
+      <input
+        class="form-control"
+        id="weapon-name"
+        formControlName="name"
+        placeholder="name"
+      />
     </div>
     <!-- Attack input -->
-    <div>
-      <label for="weapon-attack">Attack: </label>
+    <div class="mb-3">
+      <label class="form-label" for="weapon-attack">Attack</label>
       <input
+        class="form-control"
         id="weapon-attack"
         type="number"
         min="-5"
@@ -20,9 +25,10 @@
       />
     </div>
     <!-- Dodge input -->
-    <div>
-      <label for="weapon-dodge">Dodge: </label>
+    <div class="mb-3">
+      <label class="form-label" for="weapon-dodge">Dodge</label>
       <input
+        class="form-control"
         id="weapon-dodge"
         type="number"
         min="-5"
@@ -32,9 +38,10 @@
       />
     </div>
     <!-- lp input -->
-    <div>
-      <label for="weapon-lp">Life Points: </label>
+    <div class="mb-3">
+      <label class="form-label" for="weapon-lp">Life Points</label>
       <input
+        class="form-control"
         id="weapon-lp"
         type="number"
         min="-5"
@@ -44,7 +51,7 @@
       />
     </div>
     <!-- Submit -->
-    <button type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
   <div>{{ weaponForm.value?.['statWeapon'] }}</div>
   <div

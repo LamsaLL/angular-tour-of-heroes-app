@@ -1,16 +1,20 @@
 <div>
-  <h2 *ngIf="hero">{{ hero.name | uppercase }} Details</h2>
-  <div *ngIf="hero"><span>id: </span>{{ hero.id }}</div>
-
-  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="hero-name">name: </label>
-      <input id="hero-name" formControlName="name" placeholder="name" />
+  <h2 *ngIf="hero">{{ hero.name | uppercase }}</h2>
+  <form class="mx-auto" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label" for="hero-name">Name</label>
+      <input
+        class="form-control"
+        id="hero-name"
+        formControlName="name"
+        placeholder="name"
+      />
     </div>
     <!-- Attack input -->
-    <div>
-      <label for="hero-attack">Attack: </label>
+    <div class="mb-3">
+      <label class="form-label" for="hero-attack">Attack</label>
       <input
+        class="form-control"
         id="hero-attack"
         type="number"
         min="1"
@@ -19,9 +23,10 @@
       />
     </div>
     <!-- Dodge input -->
-    <div>
-      <label for="hero-dodge">Dodge: </label>
+    <div class="mb-3">
+      <label class="form-label" for="hero-dodge">Dodge</label>
       <input
+        class="form-control"
         id="hero-dodge"
         type="number"
         min="1"
@@ -30,9 +35,12 @@
       />
     </div>
     <!-- lp input -->
-    <div>
-      <label for="hero-lp" class="form-label">Life Points: </label>
+    <div class="mb-3">
+      <label class="form-label" for="hero-lp" class="form-label"
+        >Life Points
+      </label>
       <input
+        class="form-control"
         id="hero-lp"
         type="number"
         min="1"
@@ -41,16 +49,16 @@
       />
     </div>
     <!-- Weapon select -->
-    <div>
-      <label for="hero-weapon">Weapon: </label>
-      <select id="hero-weapon" formControlName="weaponId">
+    <div class="mb-3">
+      <label class="form-label" for="hero-weapon">Weapon</label>
+      <select class="form-select" id="hero-weapon" formControlName="weaponId">
         <option *ngFor="let weapon of weapons" [value]="weapon.id">
           {{ weapon.name }}
         </option>
       </select>
     </div>
     <!-- Submit -->
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <div>{{ heroForm.value?.['maxStatHero'] }}</div>
   <div
