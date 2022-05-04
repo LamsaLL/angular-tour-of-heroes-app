@@ -5,6 +5,7 @@ export class Weapon extends Serializable {
   name?: string;
   attack?: number;
   dodge?: number;
+  damages?: number;
   lp?: number;
 
   constructor() {

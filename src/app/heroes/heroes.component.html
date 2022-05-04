@@ -1,5 +1,5 @@
-<h2>My Heroes</h2>
-<div class="container-fluid">
+<div class="container">
+  <h1>My Heroes</h1>
   <div class="d-flex flex-row-reverse">
     <a routerLink="/hero-detail/new" class="btn btn-success"
       ><i class="bi bi-plus-lg"></i> New hero</a
@@ -18,7 +18,8 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Attack : {{ hero.attack }}</li>
             <li class="list-group-item">Dodge : {{ hero.dodge }}</li>
-            <li class="list-group-item">Lp : {{ hero.lp }}</li>
+            <li class="list-group-item">Life points : {{ hero.lp }}</li>
+            <li class="list-group-item">Damages : {{ hero.damages }}</li>
           </ul>
         </div>
         <div class="card-body">

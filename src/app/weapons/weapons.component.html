@@ -1,5 +1,5 @@
-<h2>My Weapons</h2>
-<div class="container-fluid">
+<div class="container">
+  <h1>My Weapons</h1>
   <a routerLink="/weapon-detail/new" class="btn btn-success">
     <i class="bi bi-plus-lg"></i>New weapon</a
   >
@@ -16,7 +16,8 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Attack : {{ weapon.attack }}</li>
             <li class="list-group-item">Dodge : {{ weapon.dodge }}</li>
-            <li class="list-group-item">lp: {{ weapon.lp }}</li>
+            <li class="list-group-item">Life points : {{ weapon.lp }}</li>
+            <li class="list-group-item">Damages : {{ weapon.damages }}</li>
           </ul>
         </div>
         <div class="card-body">

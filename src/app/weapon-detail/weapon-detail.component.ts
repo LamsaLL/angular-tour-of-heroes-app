@@ -30,14 +30,18 @@ export class WeaponDetailComponent implements OnInit {
       {
         name: ['', Validators.required],
         attack: [
-          '',
+          0,
           [Validators.required, Validators.min(-5), Validators.max(5)],
         ],
         dodge: [
-          '',
+          0,
           [Validators.required, Validators.min(-5), Validators.max(5)],
         ],
-        lp: ['', [Validators.required, Validators.min(-5), Validators.max(5)]],
+        lp: [0, [Validators.required, Validators.min(-5), Validators.max(5)]],
+        damages: [
+          0,
+          [Validators.required, Validators.min(-5), Validators.max(5)],
+        ],
       },
       { validators: statWeapon }
     );
@@ -48,7 +52,9 @@ export class WeaponDetailComponent implements OnInit {
     const attack = this.weaponForm.get('attack')?.value;
     const dodge = this.weaponForm.get('dodge')?.value;
     const lp = this.weaponForm.get('lp')?.value;
-    const summ = attack + dodge + lp;
+    const damages = this.weaponForm.get('damages')?.value;
+
+    const summ = attack + dodge + lp + damages;
     return 0 - summ;
   }
 
@@ -98,6 +104,7 @@ export class WeaponDetailComponent implements OnInit {
         attack: this.weapon?.attack,
         dodge: this.weapon?.dodge,
         lp: this.weapon?.lp,
+        damages: this.weapon?.damages,
       });
     });
   }

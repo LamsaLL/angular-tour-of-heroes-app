@@ -7,7 +7,8 @@ export const statWeapon: ValidatorFn = (
   const attack = control.get('attack');
   const dodge = control.get('dodge');
   const lp = control.get('lp');
+  const damages = control.get('damages');
 
-  const summ = attack?.value + dodge?.value + lp?.value;
+  const summ = attack?.value + dodge?.value + lp?.value + damages?.value;
   return summ !== 0 ? { statWeapon: true } : null;
 };

@@ -1,9 +1,7 @@
 import { Component, OnInit, Pipe } from '@angular/core';
-import { first } from 'rxjs';
 
 import { Hero } from '../data/hero';
 import { HeroService } from '../service/hero.service';
-import { MessageService } from '../service/message.service';
 import { ToastrService } from '../../../node_modules/ngx-toastr';
 @Pipe({
   name: 'filterHeros',

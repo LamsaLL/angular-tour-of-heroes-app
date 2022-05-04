@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero?: Hero;
-  id?: number;
+  id?: string;
   weapon?: Weapon;
   @Input() weapons?: Weapon[];
   heroForm!: FormGroup;
@@ -41,32 +41,35 @@ export class HeroDetailComponent implements OnInit {
   createForm() {
     this.heroForm = this.fb.group(
       {
-        name: ['', Validators.required],
-        attack: ['', [Validators.required, Validators.min(1)]],
-        dodge: ['', [Validators.required, Validators.min(1)]],
-        lp: ['', [Validators.required, Validators.min(1)]],
+        name: [, Validators.required],
+        attack: [1, [Validators.required, Validators.min(1)]],
+        dodge: [1, [Validators.required, Validators.min(1)]],
+        lp: [1, [Validators.required, Validators.min(1)]],
+        damages: [1, [Validators.required, Validators.min(1)]],
         weaponId: [],
       },
       { validators: maxStatHero }
     );
   }
 
-  // get points left to distribute  to  the  hero
+  // get points left to distribute to the hero
   get pointsLeft(): number {
     const attack = this.heroForm.get('attack')?.value;
     const dodge = this.heroForm.get('dodge')?.value;
     const lp = this.heroForm.get('lp')?.value;
-    return 40 - attack - dodge - lp;
+    const damages = this.heroForm.get('damages')?.value;
+
+    return Math.abs(40 - attack - dodge - lp - damages);
   }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.createForm();
-      // if id is not defined, it is a new hero
+      this.getWeapons();
+      // if id is defined
       if (this.id) {
         this.getHero();
-        this.getWeapons();
       }
     });
   }
@@ -77,6 +80,7 @@ export class HeroDetailComponent implements OnInit {
 
   onSubmit() {
     if (this.heroForm.valid) {
+      // if id is defined, we update the hero else we create a new one
       if (this.id) {
         this.heroService.updateHero({
           id: this.hero?.id,
@@ -97,26 +101,29 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
-    const id = String(this.route.snapshot.paramMap.get('id'));
-    this.heroService.getHero(id).subscribe((hero) => {
-      this.hero = hero;
+    if (this.id) {
+      this.heroService.getHero(this.id).subscribe((hero) => {
+        this.hero = hero;
+        // we populate the form with the hero's data
+        this.heroForm.patchValue({
+          name: this.hero?.name,
+          attack: this.hero?.attack,
+          dodge: this.hero?.dodge,
+          lp: this.hero?.lp,
+          damages: this.hero?.damages,
+        });
 
-      this.heroForm.patchValue({
-        name: this.hero?.name,
-        attack: this.hero?.attack,
-        dodge: this.hero?.dodge,
-        lp: this.hero?.lp,
+        if (this.hero?.weaponId !== undefined) {
+          this.weaponService
+            .getWeapon(this.hero?.weaponId)
+            .subscribe((weapon) => {
+              // we populate the form with the hero's weapon
+              this.weapon = weapon;
+              this.heroForm.patchValue({ weaponId: this.weapon?.id });
+            });
+        }
       });
-
-      if (this.hero?.weaponId !== undefined) {
-        this.weaponService
-          .getWeapon(this.hero?.weaponId)
-          .subscribe((weapon) => {
-            this.weapon = weapon;
-            this.heroForm.patchValue({ weaponId: this.weapon?.id });
-          });
-      }
-    });
+    }
   }
 
   getWeapons(): void {

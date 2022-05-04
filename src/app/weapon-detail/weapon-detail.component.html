@@ -1,5 +1,8 @@
 <div>
-  <h2 class="mx-auto" *ngIf="weapon">{{ weapon.name | uppercase }}</h2>
+  <h1 class="text-center" *ngIf="!weapon">New weapon</h1>
+  <h1 class="text-center" *ngIf="weapon">
+    Weapon: {{ weapon.name | uppercase }}
+  </h1>
 
   <form class="mx-auto" [formGroup]="weaponForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
@@ -39,7 +42,7 @@
     </div>
     <!-- lp input -->
     <div class="mb-3">
-      <label class="form-label" for="weapon-lp">Life Points</label>
+      <label class="form-label" for="weapon-lp">Life points</label>
       <input
         class="form-control"
         id="weapon-lp"
@@ -50,17 +53,34 @@
         placeholder="lp"
       />
     </div>
+    <!-- damages input -->
+    <div class="mb-3">
+      <label class="form-label" for="weapon-damages">Damages</label>
+      <input
+        class="form-control"
+        id="weapon-damages"
+        type="number"
+        min="-5"
+        max="5"
+        formControlName="damages"
+        placeholder="damages"
+      />
+    </div>
+    <div
+      *ngIf="weaponForm.errors?.['statWeapon']"
+      class="cross-validation-warning-message alert alert-warning"
+    >
+      The sum of the points must be equal to 0
+    </div>
+    <div
+      *ngIf="weaponForm.errors?.['statWeapon']"
+      class="cross-validation-error-message alert alert-danger"
+    >
+      {{ pointsLeft }} point(s) to assign
+    </div>
+
     <!-- Submit -->
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
   <div>{{ weaponForm.value?.['statWeapon'] }}</div>
-  <div
-    *ngIf="weaponForm.errors?.['statWeapon']"
-    class="cross-validation-error-message alert alert-danger"
-  >
-    La somme des points doit être egale à 0
-  </div>
-  <div [hidden]="!weaponForm.errors?.['statWeapon']">
-    Points restants: {{ pointsLeft }}
-  </div>
 </div>

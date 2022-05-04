@@ -1,5 +1,6 @@
 <div>
-  <h2 *ngIf="hero">{{ hero.name | uppercase }}</h2>
+  <h1 class="text-center" *ngIf="!hero">New hero</h1>
+  <h1 class="text-center" *ngIf="hero">Hero: {{ hero.name | uppercase }}</h1>
   <form class="mx-auto" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label class="form-label" for="hero-name">Name</label>
@@ -34,10 +35,10 @@
         placeholder="dodge"
       />
     </div>
-    <!-- lp input -->
+    <!-- Lp input -->
     <div class="mb-3">
       <label class="form-label" for="hero-lp" class="form-label"
-        >Life Points
+        >Life points
       </label>
       <input
         class="form-control"
@@ -48,27 +49,43 @@
         placeholder="lp"
       />
     </div>
+    <!-- Damages input -->
+    <div class="mb-3">
+      <label class="form-label" for="hero-damages">Damages</label>
+      <input
+        class="form-control"
+        id="hero-damages"
+        type="number"
+        min="1"
+        formControlName="damages"
+        placeholder="damages"
+      />
+    </div>
     <!-- Weapon select -->
     <div class="mb-3">
       <label class="form-label" for="hero-weapon">Weapon</label>
       <select class="form-select" id="hero-weapon" formControlName="weaponId">
+        <option [ngValue]="null">No weapon</option>
         <option *ngFor="let weapon of weapons" [value]="weapon.id">
           {{ weapon.name }}
         </option>
       </select>
     </div>
+    <!-- Hero's stats -->
+    <div
+      class="cross-validation-success-message alert alert-success"
+      [hidden]="heroForm.errors?.['maxStatHero']"
+    >
+      {{ pointsLeft }} point(s) you can still assign
+    </div>
+    <div
+      class="cross-validation-error-message alert alert-danger"
+      *ngIf="heroForm.errors?.['maxStatHero']"
+    >
+      Careful, you can only assign 40 points ! ({{ pointsLeft }}
+      extra point(s))
+    </div>
     <!-- Submit -->
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  <div>{{ heroForm.value?.['maxStatHero'] }}</div>
-  <div
-    *ngIf="heroForm.errors?.['maxStatHero']"
-    class="cross-validation-error-message alert alert-danger"
-  >
-    Max 40 points
-  </div>
-  <div [hidden]="heroForm.errors?.['maxStatHero']">
-    Points restants: {{ pointsLeft }}
-  </div>
-  <div>ARME stat: {{ weapon?.attack }}</div>
 </div>
